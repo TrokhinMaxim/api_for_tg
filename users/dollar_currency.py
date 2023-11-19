@@ -4,6 +4,7 @@ from datetime import datetime
 
 
 def get_currency():
+    # API ключ оставлен намеренно, для простоты тестирования кода.
     api_key = "dea272e9412a4d18810b446111a48ee8"
     base_currency = "USD"
     target_currency = "RUB"

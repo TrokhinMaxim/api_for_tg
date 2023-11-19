@@ -15,6 +15,7 @@ from .serializers import (
 )
 from rest_framework.generics import RetrieveAPIView
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
 
 
 from .dollar_currency import get_currency
@@ -43,7 +44,7 @@ class UserProfileView(RetrieveAPIView):
     def get_object(self):
         if self.request.user.is_staff:
             user_id = self.kwargs.get("user_id")
-            return CustomUser.objects.get(pk=user_id)
+            return get_object_or_404(CustomUser, pk=user_id)
         return self.request.user
 
 
@@ -124,7 +125,7 @@ class UserHistoryTemplateView(generics.ListAPIView):
     permission_classes = [IsAdminUser]
 
     def get_queryset(self):
-        user_username = self.kwargs["user_username"]
+        user_username = self.kwargs.get("user_username")
         user = get_user_model().objects.get(username=user_username)
         return CurrencyRequest.objects.filter(user=user)
 
